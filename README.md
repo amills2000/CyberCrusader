@@ -127,7 +127,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [forks-url]: https://github.com/amills2000/CyberCrusader/network/members
 [stars-shield]: https://img.shields.io/github/stars/amills2000/CyberCrusader.svg?style=for-the-badge
 [stars-url]: https://github.com/amills2000/CyberCrusader/stargazers
-[issues-shield]: https://img.shields.io/github/issuesamills2000/CyberCrusader.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/amills2000/CyberCrusader.svg?style=for-the-badge
 [issues-url]: https://github.com/amills2000/CyberCrusader/issues
 [license-shield]: https://img.shields.io/github/license/amills2000/CyberCrusader.svg?style=for-the-badge
 [license-url]: https://github.com/amills2000/CyberCrusader/blob/master/LICENSE.txt
