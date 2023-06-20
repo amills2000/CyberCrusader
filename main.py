@@ -18,6 +18,10 @@ modules={}
 
 root="./Modules"
 
+#create tools folder if it does not exist
+if not os.path.isdir(os.path.join(root,"tools")):
+    os.mkdir(os.path.join(root,"tools"))
+
 # create a dictionary of machine modules based on the value of the get_machine_type where machine type can have multiple values
 machine_modules={}
 #import the modules in the folder
