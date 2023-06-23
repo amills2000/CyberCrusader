@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/amills2000/CyberCrusader">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="600" height="80">
   </a>
 
 <h3 align="center">CyberCrusader</h3>
@@ -48,11 +48,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -69,7 +65,7 @@ The idea behind this project is to simplify the analysis of triage artifacts gat
 
 ### Built With
 
-* [![Python][Python]][Python]
+* [![Python][Python]][python-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -87,12 +83,11 @@ This project is based on python 3.0 and you will need to have it install on the 
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/amills2000/CyberCrusader.git
    ```
-3. Install python requirements
+2. Install python requirements
    ```
    pip install -r requirements.tx
    ```
@@ -121,3 +116,22 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/amills2000/CyberCrusader.svg?style=for-the-badge
+[contributors-url]: https://github.com/amills2000/CyberCrusader/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/amills2000/CyberCrusader.svg?style=for-the-badge
+[forks-url]: https://github.com/amills2000/CyberCrusader/network/members
+[stars-shield]: https://img.shields.io/github/stars/amills2000/CyberCrusader.svg?style=for-the-badge
+[stars-url]: https://github.com/amills2000/CyberCrusader/stargazers
+[issues-shield]: https://img.shields.io/github/issues/amills2000/CyberCrusader.svg?style=for-the-badge
+[issues-url]: https://github.com/amills2000/CyberCrusader/issues
+[license-shield]: https://img.shields.io/github/license/amills2000/CyberCrusader.svg?style=for-the-badge
+[license-url]: https://github.com/amills2000/CyberCrusader/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/marc-amills
+[Python]: https://img.shields.io/badge/Python-35495E?style=for-the-badge&logo=python&logoColor=FFFF00
+[python-url]: https://www.python.org/
