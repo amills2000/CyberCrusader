@@ -31,3 +31,5 @@ def get_type():
 def get_name():
     return("zip_extractor")
 
+def get_description():
+    return("Extracts zip files")

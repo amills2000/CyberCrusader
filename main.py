@@ -8,7 +8,8 @@ import os
 import Modules
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--path", help = "Triage path", required=True)
+parser.add_argument("-p", "--path", help = "Triage path", required=False)
+parser.add_argument("-m", "--modules", help = "list all modules", required=False, action='store_true')
 args = parser.parse_args()
 
 # define the directory where Triages are located
@@ -29,11 +30,9 @@ for dir in os.listdir("./Modules"):
     # import all modules in directory
     if dir.startswith("__") or dir=="tools" or not os.path.isdir(os.path.join(root,dir)):
         continue
-    print(dir)
     for file in os.listdir(os.path.join(root,dir)):
         if file.endswith(".py") and not file.startswith("__"):
             module_name = os.path.basename(file)[:-3]
-            print("Modules."+dir+"."+module_name)
             module = importlib.import_module("Modules."+dir+"."+module_name)
             # get the module type
             module_type=module.get_type()
@@ -65,8 +64,25 @@ for dir in os.listdir("./Modules"):
                         machine_modules[machine_type].append(module)
                     else:
                         machine_modules[machine_type]=[module]
-print(modules)
-print(machine_modules)
+
+if args.modules:
+    print("Modules:")
+    for module_type in modules:
+        print("\tType: "+module_type)
+        for dependency in modules[module_type]:
+            print("\t\tDependency: "+dependency)
+            for module in modules[module_type][dependency]:
+                print("\t\t\t"+module.get_name()+": "+module.get_description())
+    print("\tType: Machine Modules:")
+    for machine_type in machine_modules:
+        print("\t\tMachine Type: "+machine_type)
+        for module in machine_modules[machine_type]:
+            print("\t\t\t"+module.get_name()+": "+module.get_description())
+
+    exit()
+if not dir_path:
+    print("Please provide a triage path")
+    exit()
 def execute_extractor_modules(dir_path,modules):
     for root, dirs, files in os.walk(dir_path):
         for file in files:
@@ -118,6 +134,11 @@ def topological_sort(modules):
 sorted_modules={}
 for type in machine_modules:
     sorted_modules[type]=topological_sort(machine_modules[type])
+    for module in sorted_modules[type]:
+        # if dependency is "ALL" put module at the end of the list
+        if "ALL" in module.get_dependencies():
+            sorted_modules[type].remove(module)
+            sorted_modules[type].append(module)
 
 #iterate over the machines and execute the modules in the correct order
 for machine_type in machines:
@@ -134,7 +155,11 @@ for machine_type in machines:
             print("Executing modules for machine "+machine_name+" in path "+machine_path)
             for module in sorted_modules[machine_type]:
                 print("Executing module "+module.get_name())
-                module.execute({"drive_path":machine_path})
+                try:
+                    module.execute({"drive_path":machine_path})
+                except Exception as e:
+                    print("Error on module "+module.get_name()+": "+str(e))
+                    continue
                 print("Module "+module.get_name()+" executed")
             print("Modules for machine "+machine_name+" in path "+machine_path+" executed")
         print("All modules executed for machine "+machine_name)

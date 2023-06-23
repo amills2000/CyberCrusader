@@ -29,3 +29,6 @@ def get_name():
 
 def get_machine_type():
     return("windows")
+
+def get_description():
+    return("Searches for windows machines in a triage path by looking for $MFT files (Extracted with tools like kape or CYLR)")

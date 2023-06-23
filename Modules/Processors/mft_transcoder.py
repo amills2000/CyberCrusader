@@ -65,3 +65,6 @@ def get_name():
 
 def get_machine_type():
     return("windows")
+
+def get_description():
+    return("Transcodes the MFT into a CSV file")

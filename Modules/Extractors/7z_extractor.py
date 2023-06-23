@@ -29,3 +29,6 @@ def get_type():
 
 def get_name():
     return("7z_extractor")
+
+def get_description():
+    return("Extracts 7z files")

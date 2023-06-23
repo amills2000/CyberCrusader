@@ -55,7 +55,7 @@ def execute(config):
     
     extract_path=config["drive_path"]
     try:
-        res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=subprocess.PIPE)
+        res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
         out, err = res.communicate()
         # Quizas a fichero de log
         print(out.decode('utf-8'))
@@ -78,3 +78,5 @@ def get_name():
 def get_machine_type():
     return("windows")
 
+def get_description():
+    return("Executes the Chainsaw tool to use Sigma rules on the machine")

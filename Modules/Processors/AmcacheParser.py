@@ -39,7 +39,7 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\Amcache.csv"):
         return()
     try:
-        subprocess.check_call([r".\tools\AmcacheParser\AmcacheParser.exe", "-f", extract_path+"\Windows\\appcompat\Programs\Amcache.hve","--csv",extract_path+"\CSVs","--csvf","Amcache.csv"])
+        subprocess.check_call([r".\Modules\tools\AmcacheParser\AmcacheParser.exe", "-f", extract_path+"\Windows\\appcompat\Programs\Amcache.hve","--csv",extract_path+"\CSVs","--csvf","Amcache.csv"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
     except Exception as e:
         print("Error on AmcacheParser tool"+str(e))
 
@@ -57,3 +57,6 @@ def get_name():
 
 def get_machine_type():
     return("windows")
+
+def get_description():
+    return("Parses the Amcache.hve file into a CSV file")
