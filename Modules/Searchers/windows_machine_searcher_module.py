@@ -12,9 +12,7 @@ def execute(path):
                 machines.append((machine_name,machine_path))
     print(machines)
     return(machines)
-
     
-
 def get_dependencies():
     return(["triage_path"])
 

@@ -6,6 +6,7 @@ import pandas as pd
 
 def getServices(SYSTEM,extract_path):
     f = open(extract_path+"\\CSVs\\services.csv",'w',encoding='utf-8')
+
     reg = Registry.Registry(SYSTEM)
 
     # iterate all ControlSet00X
@@ -30,44 +31,45 @@ def getServices(SYSTEM,extract_path):
     f.close()
 
 def getRuns(SOFTWARE,extract_path):
-    f = open(extract_path+"\\CSVs\\run-runonce-system.csv",'w',encoding='utf-8')
+    df_run_tmp = pd.DataFrame({"path":[],"user":[]})
     reg = Registry.Registry(SOFTWARE)
     values = reg.open("Microsoft\\Windows\\CurrentVersion\\Run")
     for value in values.values():
-        f.write(value.value() + "\n")
+        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     values = reg.open("Microsoft\\Windows\\CurrentVersion\\RunOnce")
     for value in values.values():
-        f.write(value.value() + "\n")
+        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run")
     for value in values.values():
-        f.write(value.value() + "\n")
+        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\RunOnce")
     for value in values.values():
-        f.write(value.value() + "\n")
-    f.close()
+        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
+    return df_run_tmp
 
 def getUserRuns(SOFTWARE, username,extract_path):
-    f = open(extract_path+"\\CSVs\\run-runonce-" + username + ".csv",'w',encoding='utf-8')
+    df_run_tmp = pd.DataFrame({"path":[],"user":[]})
     reg = Registry.Registry(SOFTWARE)
     try:
         values = reg.open("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")
         for value in values.values():
-            f.write(value.value() + "\n")
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),username]
     except:
        pass
     try:
         values = reg.open("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce")
         for value in values.values():
-            f.write(value.value() + "\n")
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),username]
     except:
        pass
     try:
         values = reg.open("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Runonce")
         for value in values.values():
-            f.write(value.value() + "\n")
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),username]
     except:
        pass
-    f.close()  
+    
+    return df_run_tmp
 
 def printIP(SYSTEM):
     reg = Registry.Registry(SYSTEM)
@@ -122,12 +124,14 @@ def execute(config):
     if not exists(rootPath + "\\Users"):
         print("Users not found, check CyLr path")
     else:
+        df_run_tmp = pd.DataFrame({"path":[],"user":[]})
         for f in os.scandir(rootPath + "\\Users"):
             try:
                 SOFTWARE = rootPath + "\\Users\\" + f.name + "\\NTUSER.DAT"
-                getUserRuns(SOFTWARE, f.name,rootPath)
+                df_run_tmp=pd.concat(df_run_tmp,getUserRuns(SOFTWARE, f.name,rootPath))
             except:
-                pass 
+                pass
+        df_run_tmp.to_csv(rootPath+'\\CSVs\\run-runonce.csv', index=False)        
     #save machine data to file
     with open(rootPath+"\\JSONs\\machine_info.json", "w") as file1:
         file1.write(str(machine_data))

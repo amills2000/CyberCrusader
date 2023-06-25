@@ -156,7 +156,7 @@ for machine_type in machines:
             for module in sorted_modules[machine_type]:
                 print("Executing module "+module.get_name())
                 try:
-                    module.execute({"drive_path":machine_path})
+                    module.execute({"drive_path":machine_path,"machine_name":machine_name})
                 except Exception as e:
                     print("Error on module "+module.get_name()+": "+str(e))
                     continue
