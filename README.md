@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/amills2000/CyberCrusader">
-    <img src="images/logo.png" alt="Logo" width="600" height="80">
+    <img src="images/logo.png" alt="Logo" width="100" height="100">
   </a>
 
 <h3 align="center">CyberCrusader</h3>
