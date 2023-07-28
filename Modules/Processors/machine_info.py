@@ -3,12 +3,59 @@ import os
 from os.path import exists
 import pandas as pd
 
+def get_SO_info_json(config):
+    #open the SAM hive
+    rootPath = config["drive_path"]
+    SAM = rootPath + "\\Windows\\System32\\config\\SAM"
+    if not exists(SAM):
+        print("SAM not found, check CyLr path")
+        return()
+    reg = Registry.Registry(SAM)
+    #machine info on HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion
+    key = reg.open("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+    # get product name and verion
+    for value in key.values():
+        if value.name() == "ProductName":
+            product_name = value.value()
+        if value.name() == "CurrentVersion":
+            version = value.value()
+    # get the machine name
+    key = reg.open("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName")
+    for value in key.values():
+        if value.name() == "ComputerName":
+            machine_name = value.value()
+    # get the machine SID
+    key = reg.open(r"HKEY_LOCAL_MACHINE\SAM\Domains\Account\Users\Names")
+    for value in key.values():
+        if value.name() == "Administrator":
+            machine_sid = value.value().split("-")[0]
+    # get the machine domain
+    key = reg.open("HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account")
+    for value in key.values():
+        if value.name() == "V":
+            machine_domain = value.value().split("\\")[0]
+    # get the machine domain
+    key = reg.open(r"HKEY_LOCAL_MACHINE\SAM\Domains\Account\Users\Names")
+    for value in key.values():
+        if value.name() == "Administrator":
+            machine_sid = value.value().split("-")[0]
+    # add all the info to a dictionary
+    machine_data={}
+    machine_data["machine_name"]=machine_name
+    machine_data["machine_sid"]=machine_sid
+    machine_data["machine_domain"]=machine_domain
+    machine_data["product_name"]=product_name
+    machine_data["version"]=version
+    return(machine_data)
+    
+
+
+
+
 
 def getServices(SYSTEM,extract_path):
     f = open(extract_path+"\\CSVs\\services.csv",'w',encoding='utf-8')
-
     reg = Registry.Registry(SYSTEM)
-
     # iterate all ControlSet00X
     for i in range(1, 10):
         try:
@@ -110,7 +157,7 @@ def execute(config):
     rootPath = config["drive_path"]
     SYSTEM = rootPath + "\\Windows\\System32\\config\\SYSTEM"
     SOFTWARE = rootPath + "\\Windows\\System32\\config\\SOFTWARE"
-    machine_data={}
+    machine_data=get_SO_info_json(config)
     if not exists(SYSTEM):
         print("SYSTEM not found, check CyLr path")
     else:

@@ -5,8 +5,6 @@ from zipfile import ZipFile
 import argparse
 import os
 
-import Modules
-
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--path", help = "Triage path", required=False)
 parser.add_argument("-m", "--modules", help = "list all modules", required=False, action='store_true')
