@@ -183,7 +183,6 @@ def execute(config):
     with open(rootPath+"\\JSONs\\machine_info.json", "w") as file1:
         file1.write(str(machine_data))
     return(machine_data)
-
     
 def get_dependencies():
     return([])

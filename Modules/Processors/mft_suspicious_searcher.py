@@ -13,9 +13,6 @@ def execute(config):
         search=""
         with open("./Modules/tools/suspicious_tools.txt") as f:
             content = f.readlines()
-            # Show the file contents line by line.
-            # We added the comma to print single newlines and not double newlines.
-            # This is because the lines contain the newline character '\n'.
             for line in content:
                 search=search+line.strip()+"|"
         if len(search)==0:
