@@ -18,13 +18,11 @@ def execute(config):
         if len(search)==0:
             print("suspicious_tools.txt is empty")
         search=search.rstrip('|')
-        print(search)
         df = pd.read_csv(config["drive_path"]+"\CSVs\MFT.csv",sep='|')
         # parse date
         df['date'] = pd.to_datetime(df['$FILENAME Creation Time'], format='%Y-%m-%d %H:%M:%S')
         df=df[df.File.str.contains('(?:'+search+')', case=False)]
         if len(df)>0:
-            print(config["drive_path"])
             df.to_csv(config["drive_path"]+"\CSVs\MFT_suspicious_tools.csv")
     except Exception as e:
         print("Error on MFT tool"+str(e)+"\n")

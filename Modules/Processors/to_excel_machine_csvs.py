@@ -1,22 +1,24 @@
 import glob
 import pandas as pd
 import os
+from io import StringIO
 
-def detect_csv_separator(filename):
+def detect_csv_separator(filename,sample_size=1024):
+    potential_delimiters = [',', '\t', ';','|']  # Common CSV delimiters to check
+    delimiter_count = {}
+
     with open(filename, 'r') as file:
-        # Read a sample of the file
-        sample = file.read(1024)  # Adjust the sample size as needed
+        sample = file.read(sample_size)
 
-    # Use pandas to sniff the delimiter
-    sniffer = pd.read_csv(pd.compat.StringIO(sample), delimiter=None)
-    separator = sniffer._sep
+    for delimiter in potential_delimiters:
+        delimiter_count[delimiter] = sample.count(delimiter)
 
-    return separator
+    most_common_delimiter = max(delimiter_count, key=delimiter_count.get)
+    return most_common_delimiter
 
 def execute(config):
     machine=config["machine_name"]
     in_path=config["drive_path"]
-    print("join excel " + machine)
     path=os.path.join(in_path, "CSVs")
     writer = pd.ExcelWriter(os.path.join(in_path, machine+".xlsx"), engine = 'xlsxwriter')
     for filename in glob.glob(os.path.join(path, "*.csv")):
@@ -26,8 +28,10 @@ def execute(config):
                 continue
             separator = detect_csv_separator(filename)
             df = pd.read_csv(filename, sep=separator)
-            df.to_excel(writer, sheet_name=os.path.basename(filename).split(".")[0], index=False)
-            
+            #if only headers continue
+            if len(df) < 2:
+                continue
+            df.to_excel(writer, sheet_name=os.path.basename(filename).split(".")[0], index=False) 
         except Exception as e:
             print(e)
     writer.close()

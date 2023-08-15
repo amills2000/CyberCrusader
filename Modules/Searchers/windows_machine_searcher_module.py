@@ -10,7 +10,6 @@ def execute(path):
                 machine_path=root
                 machine_name=machine_path.split("\\")[-2]
                 machines.append((machine_name,machine_path))
-    print(machines)
     return(machines)
     
 def get_dependencies():

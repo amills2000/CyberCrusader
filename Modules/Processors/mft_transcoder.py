@@ -45,9 +45,6 @@ def execute(config):
     try:
         res = subprocess.Popen([r".\Modules\tools\mft.exe", "transcode", config["drive_path"]+"\\$MFT", config["drive_path"]+"\\CSVs\\MFT.csv"],stdout=subprocess.PIPE)
         out, err = res.communicate()
-        # Quizas a fichero de log
-        print(out.decode('utf-8'))
-        print("MFT transcoder tool successfully executed\n")
     except Exception as e:
         print("Error on MFT tool"+str(e)+"\n")
 

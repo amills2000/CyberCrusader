@@ -55,7 +55,6 @@ def readfile(cylr_path,machine):
 
                     event_data = f'Time: {time_created}, Computer: {computer}, Event Id: {event_id}, TargetUserName: {TargetUserName}, WorkstationName: {WorkstationName}, IpAddress: {IpAddress}, LogonType: {LogonType}, TargetDomainName: {TargetDomainName}'
                     if IpAddress and len(IpAddress)>4 and (LogonType=="10" or LogonType=="3") and not computer.split(".")[0]==WorkstationName:
-                        print(event_data)
                         df_connection.loc[len(df_connection.index)] = [IpAddress,WorkstationName,computer.split(".")[0],time_created,LogonType,TargetUserName,"security"]
             except Exception as e:
                 i=1
@@ -69,7 +68,6 @@ def readfile(cylr_path,machine):
             win32evtlog.EvtQueryFilePath)
     a=1
     while execute:
-        print("RDP",a)
         a += 1
         # read 1 record(s)
         events = win32evtlog.EvtNext(query_handle, 1)
@@ -104,7 +102,6 @@ def readfile(cylr_path,machine):
 
                     event_data = f'Time: {time_created}, Computer: {computer}, Event Id: {event_id}, IpAddress: {IpAddress}, Domain: {Domain}, User: {User}'
                     if IpAddress and len(IpAddress)>4:
-                        print(event_data)
                         df_connection.loc[len(df_connection.index)] = [IpAddress,computer.split(".")[0],machine,time_created,"RDP",User,"RDP"]
             except Exception as e:
                 i=1

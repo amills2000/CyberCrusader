@@ -109,6 +109,12 @@ for module in modules["machine_finders"]["triage_path"]:
         else:
             machines[module.get_machine_type()]={machine[0]:[machine[1]]}
 
+#print the machines
+print("\033[92m"+"Machines found:"+"\033[0m")
+for machine_type in machines:
+    print("\t\033[94m"+machine_type+"\033[0m")
+    for machine in machines[machine_type]:
+        print("\t\t"+machine+":"+str(machines[machine_type][machine]))
 
 def topological_sort(modules):
     visited = set()
@@ -140,7 +146,7 @@ for type in machine_modules:
 
 #iterate over the machines and execute the modules in the correct order
 for machine_type in machines:
-    print("Executing modules for all machines of type "+machine_type)
+    print(f"\033[94m"+"Executing modules for all machines of type "+machine_type+"\033[0m")
     for machine_name in machines[machine_type]:
         for machine_path in machines[machine_type][machine_name]:
             #creating output folders
@@ -150,16 +156,12 @@ for machine_type in machines:
                 os.mkdir(os.path.join(machine_path,"JSONs"))
             if not os.path.isdir(os.path.join(machine_path,"TXTs")):
                 os.mkdir(os.path.join(machine_path,"TXTs"))
-            print("Executing modules for machine "+machine_name+" in path "+machine_path)
+            print(f"Executing modules for machine "+machine_name+" in path "+machine_path)
             for module in sorted_modules[machine_type]:
-                print("Executing module "+module.get_name())
+                print(f"\033[92m"+"\tExecuting module "+module.get_name()+"\033[0m")
                 try:
                     module.execute({"drive_path":machine_path,"machine_name":machine_name})
                 except Exception as e:
-                    print("Error on module "+module.get_name()+": "+str(e))
+                    print(f"\033[91m"+"\tError on module "+module.get_name()+": "+str(e)+"\033[0m")
                     continue
-                print("Module "+module.get_name()+" executed")
-            print("Modules for machine "+machine_name+" in path "+machine_path+" executed")
-        print("All modules executed for machine "+machine_name)
-    print("All modules executed for all machines of type "+machine_type)
 

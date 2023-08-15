@@ -17,7 +17,7 @@ def execute(config):
                 read_file = pd.read_csv(os.path.join(path, filename))
                 read_file.to_sql(name=filename.split("\\")[-1].split(".")[0][:31], con=conn)
         except Exception as e:
-            print(e)
+            pass
     conn.close()
 
 def get_dependencies():

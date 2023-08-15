@@ -29,7 +29,7 @@ def setup():
             try:
                 zip_ref.extract(name, extract_path)
             except Exception as e:
-                print("failed to extract Chainsaw")
+                print("failed to extract AppCompatCacheParser")
     os.remove(filename)
 
 def execute(config):

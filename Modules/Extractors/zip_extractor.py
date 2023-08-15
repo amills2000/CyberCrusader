@@ -11,9 +11,12 @@ def execute(path):
         failes_extractions=""
         for name in zip_ref.namelist():
             try:
+                #if file is too big not extract
+                if zip_ref.getinfo(name).file_size > 10000000000:
+                    continue
                 zip_ref.extract(name, extract_path)
             except Exception as e:
-                failes_extractions=failes_extractions+str(e)+"\n"
+                failes_extractions=failes_extractions+"Extracting "+name+str(e)+"\n"
         if len(failes_extractions)>0:
             with open(os.path.join(extract_path,"failed extractions.txt"), "w") as file1:
                 file1.writelines(failes_extractions)
