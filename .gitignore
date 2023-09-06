@@ -1,3 +1,4 @@
 Modules/tools/
 *.pyc
 __pycache__/
+configs.json

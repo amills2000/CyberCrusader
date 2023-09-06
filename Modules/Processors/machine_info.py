@@ -7,51 +7,63 @@ def get_SO_info_json(config):
     #open the SAM hive
     rootPath = config["drive_path"]
     SAM = rootPath + "\\Windows\\System32\\config\\SAM"
+    SYSTEM = rootPath + "\\Windows\\System32\\config\\SYSTEM"
+    SOFTWARE = rootPath + "\\Windows\\System32\\config\\SOFTWARE"
+    machine_data={}
     if not exists(SAM):
         print("SAM not found, check CyLr path")
         return()
-    reg = Registry.Registry(SAM)
+    if not exists(SOFTWARE):
+        print("SOFTWARE not found, check CyLr path")
+        return()
+    if not exists(SYSTEM):
+        print("SYSTEM not found, check CyLr path")
+        return()
+    reg_sam = Registry.Registry(SAM)
+    reg_software = reg = Registry.Registry(SOFTWARE)
+    reg_system = reg = Registry.Registry(SYSTEM)
     #machine info on HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion
-    key = reg.open("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion")
-    # get product name and verion
-    for value in key.values():
-        if value.name() == "ProductName":
-            product_name = value.value()
-        if value.name() == "CurrentVersion":
-            version = value.value()
+    try:
+        key = reg_software.open("Microsoft\Windows NT\CurrentVersion")
+        # get product name and verion
+        for value in key.values():
+            if value.name() == "ProductName":
+                product_name = value.value()
+                machine_data["product_name"]=product_name
+            if value.name() == "CurrentVersion":
+                version = value.value()
+                machine_data["version"]=version
+    except Exception as e:
+        print("Error on SAM hive"+str(e)+"\n")
     # get the machine name
-    key = reg.open("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName")
-    for value in key.values():
-        if value.name() == "ComputerName":
-            machine_name = value.value()
+    try:
+        key = reg_system.open("ControlSet001\Control\ComputerName\ComputerName")
+        for value in key.values():
+            if value.name() == "ComputerName":
+                machine_name = value.value()
+                machine_data["machine_name"]=machine_name
+    except Exception as e:
+        print("Error on SAM hive"+str(e)+"\n")
     # get the machine SID
-    key = reg.open(r"HKEY_LOCAL_MACHINE\SAM\Domains\Account\Users\Names")
-    for value in key.values():
-        if value.name() == "Administrator":
-            machine_sid = value.value().split("-")[0]
+    try:
+        key = reg_sam.open(r"Domains\Account\Users\Names")
+        for value in key.values():
+            if value.name() == "Administrator":
+                machine_sid = value.value().split("-")[0]
+                machine_data["machine_sid"]=machine_sid
+    except Exception as e:
+        print("Error on SAM hive"+str(e)+"\n")
     # get the machine domain
-    key = reg.open("HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account")
-    for value in key.values():
-        if value.name() == "V":
-            machine_domain = value.value().split("\\")[0]
-    # get the machine domain
-    key = reg.open(r"HKEY_LOCAL_MACHINE\SAM\Domains\Account\Users\Names")
-    for value in key.values():
-        if value.name() == "Administrator":
-            machine_sid = value.value().split("-")[0]
-    # add all the info to a dictionary
-    machine_data={}
-    machine_data["machine_name"]=machine_name
-    machine_data["machine_sid"]=machine_sid
-    machine_data["machine_domain"]=machine_domain
-    machine_data["product_name"]=product_name
-    machine_data["version"]=version
+    try:
+        key = reg_sam.open("SAM\Domains\Account")
+        for value in key.values():
+            if value.name() == "V":
+                machine_domain = value.value().split("\\")[0]
+                machine_data["machine_domain"]=machine_domain
+    except Exception as e:
+        print("Error on SAM hive"+str(e)+"\n")
     return(machine_data)
     
-
-
-
-
 
 def getServices(SYSTEM,extract_path):
     f = open(extract_path+"\\CSVs\\services.csv",'w',encoding='utf-8')
@@ -80,18 +92,30 @@ def getServices(SYSTEM,extract_path):
 def getRuns(SOFTWARE,extract_path):
     df_run_tmp = pd.DataFrame({"path":[],"user":[]})
     reg = Registry.Registry(SOFTWARE)
-    values = reg.open("Microsoft\\Windows\\CurrentVersion\\Run")
-    for value in values.values():
-        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
-    values = reg.open("Microsoft\\Windows\\CurrentVersion\\RunOnce")
-    for value in values.values():
-        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
-    values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run")
-    for value in values.values():
-        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
-    values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\RunOnce")
-    for value in values.values():
-        df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
+    try:
+        values = reg.open("Microsoft\\Windows\\CurrentVersion\\Run")
+        for value in values.values():
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
+    except Exception as e:
+        print("Error on SOFTWARE hive"+str(e)+"\n")
+    try:
+        values = reg.open("Microsoft\\Windows\\CurrentVersion\\RunOnce")
+        for value in values.values():
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
+    except Exception as e:
+        print("Error on SOFTWARE hive"+str(e)+"\n")
+    try:
+        values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run")
+        for value in values.values():
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
+    except Exception as e:
+        print("Error on SOFTWARE hive"+str(e)+"\n")
+    try:
+        values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\RunOnce")
+        for value in values.values():
+            df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
+    except Exception as e:
+        print("Error on SOFTWARE hive"+str(e)+"\n")
     return df_run_tmp
 
 def getUserRuns(SOFTWARE, username,extract_path):
@@ -162,12 +186,15 @@ def execute(config):
         print("SYSTEM not found, check CyLr path")
     else:
         machine_data["IPs"]=printIP(SYSTEM)
+        
         getServices(SYSTEM,rootPath)
     if not exists(SOFTWARE):
         print("SYSTEM not found, check CyLr path")
     else:
         machine_data["users"]=printUsers(SOFTWARE)
+        
         getRuns(SOFTWARE,rootPath)
+        
     if not exists(rootPath + "\\Users"):
         print("Users not found, check CyLr path")
     else:
@@ -178,7 +205,8 @@ def execute(config):
                 df_run_tmp=pd.concat(df_run_tmp,getUserRuns(SOFTWARE, f.name,rootPath))
             except:
                 pass
-        df_run_tmp.to_csv(rootPath+'\\CSVs\\run-runonce.csv', index=False)        
+        df_run_tmp.to_csv(rootPath+'\\CSVs\\run-runonce.csv', index=False)   
+         
     #save machine data to file
     with open(rootPath+"\\JSONs\\machine_info.json", "w") as file1:
         file1.write(str(machine_data))
