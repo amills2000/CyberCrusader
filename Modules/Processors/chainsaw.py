@@ -54,14 +54,9 @@ def execute(config):
         return()
     
     extract_path=config["drive_path"]
-    try:
-        res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
-        out, err = res.communicate()
+    res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
+    out, err = res.communicate()
         # Quizas a fichero de log
-        print(out.decode('utf-8'))
-        print("chainsaw tool successfully executed\n")
-    except Exception as e:
-        print("Error on chainsaw tool"+str(e)+"\n")
 
 def get_dependencies():
     return([])
