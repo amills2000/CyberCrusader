@@ -21,8 +21,12 @@ def execute(config):
     else:
         machine_name=config["machine_name"]
     #get iris info from configs.json
-    with open(".\\configs.json", "r") as file1:
-        configs=file1.read()
+    try:
+        file1 = open(".\\configs.json", "r")
+    except:
+        raise Exception("Could not open configs.json file!")
+    configs=file1.read()
+    file1.close()
     configs=json.loads(configs)
     if configs["use_iris"]!="true":
         return()
