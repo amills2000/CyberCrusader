@@ -3,6 +3,7 @@ import os
 from os.path import exists
 import pandas as pd
 import json
+
 def get_SO_info_json(config):
     #open the SAM hive
     rootPath = config["drive_path"]
@@ -11,14 +12,11 @@ def get_SO_info_json(config):
     SOFTWARE = rootPath + "\\Windows\\System32\\config\\SOFTWARE"
     machine_data={}
     if not exists(SAM):
-        print(f"\033[91m"+"\tSAM not found, check CyLr path"+"\033[0m")
-        return()
+        raise Exception("SAM not found, check CyLr path")
     if not exists(SOFTWARE):
-        print(f"\033[91m"+"\tSOFTWARE not found, check CyLr path"+"\033[0m")
-        return()
+        raise Exception("SOFTWARE not found, check CyLr path")
     if not exists(SYSTEM):
-        print(f"\033[91m"+"\tSYSTEM not found, check CyLr path"+"\033[0m")
-        return()
+        raise Exception("SYSTEM not found, check CyLr path")
     reg_sam = Registry.Registry(SAM)
     reg_software = reg = Registry.Registry(SOFTWARE)
     reg_system = reg = Registry.Registry(SYSTEM)
