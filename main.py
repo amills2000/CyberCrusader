@@ -84,7 +84,7 @@ for dir in os.listdir("./Modules"):
                 module_dependencies=module.get_dependencies() # get the module dependencies
                 module_outputs=module.get_outputs() # get the module outputs
                 module_machine_type=module.get_machine_type() # get the module machine type
-
+                
                 # iterate over dependecies and add the module to the dictionary with the dependency as key inside the apropiate type
                 if type(module_machine_type) is not list:
                     module_machine_type=[module_machine_type]
@@ -200,3 +200,5 @@ for machine_type in machines:
                     print(f"{RED}   => Error on module "+module.get_name()+": "+str(e)+NOCOLOR)
                     print(traceback.print_exception(e))
                     continue
+
+print(f"{GREEN}[+] Done!{NOCOLOR}")
