@@ -42,7 +42,6 @@ def execute(config):
     try:
         subprocess.check_call([r".\Modules\tools\SrumECmd\SrumECmd.exe", "-f", extract_path+"\C\Windows\System32\SRU\SRUDB.dat","-r", extract_path+"\C\Windows\System32\config\SOFTWARE","--csv",extract_path+"\CSVs"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
         file_list = os.listdir(path)
-        print(file_list)
         # Specify the pattern to match and the new file name
         pattern_to_match = "SrumECmd"
         for filename in file_list:
