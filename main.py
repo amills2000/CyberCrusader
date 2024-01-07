@@ -201,4 +201,24 @@ for machine_type in machines:
                     print(traceback.print_exception(e))
                     continue
 
+# Execute all the merger modules
+print(f"{CYAN}[+] Executing merger modules...{NOCOLOR}")
+#create output folders
+if not os.path.isdir(os.path.join(dir_path,"CSVs")):
+    os.mkdir(os.path.join(dir_path,"CSVs"))
+if not os.path.isdir(os.path.join(dir_path,"JSONs")):
+    os.mkdir(os.path.join(dir_path,"JSONs"))
+if not os.path.isdir(os.path.join(dir_path,"TXTs")):
+    os.mkdir(os.path.join(dir_path,"TXTs"))
+for module in modules["merger_module"]["ALL"]:
+    print(f"{GREEN} * Executing module {module.get_name()}{NOCOLOR}")
+    #execute the modules based on machine type
+    try:
+        module.execute(dir_path,machines[module.get_machine_type()])
+    except Exception as e:
+        print(f"{RED}   => Error on module "+module.get_name()+": "+str(e)+NOCOLOR)
+        print(traceback.print_exception(e))
+        continue
+    
+
 print(f"{GREEN}[+] Done!{NOCOLOR}")
