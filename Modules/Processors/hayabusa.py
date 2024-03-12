@@ -9,9 +9,9 @@ def setup():
     if os.path.isfile(r".\Modules\tools\chainsaw\chainsaw_x86_64-pc-windows-msvc.exe"):
         return()
     # GitHub repository information
-    repo_owner = "WithSecureLabs"
-    repo_name = "chainsaw"
-    target_filename = "chainsaw_all_platforms+rules+examples.zip"  # Filename of the asset you want to download
+    repo_owner = "Yamato-Security"
+    repo_name = "hayabusa"
+    target_filename = "windows-64-bit.zip"  # Filename of the asset you want to download
 
     # Make a request to the GitHub API to get the latest release information
     api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
@@ -20,17 +20,19 @@ def setup():
 
     # Find the asset URL for the target filename
     asset_url = None
+    final_file_name=""
     for asset in release_data['assets']:
-        if asset['name'] == target_filename:
+        if asset['name'].endswith(target_filename):
             asset_url = asset['browser_download_url']
+            final_file_name=asset['name']
             break
 
     # Check if the target asset was found
     if asset_url is None:
-        print(f"No asset with the filename '{target_filename}' found in the latest release.")
+        print(f"No asset ending with the filename '{target_filename}' found in the latest release.")
     else:
         # Extract the filename from the asset URL
-        filename = r".\Modules\tools\chainsaw.zip"
+        filename = r".\Modules\tools\hayabusa.zip"
 
         # Download the asset
         response = requests.get(asset_url)
@@ -43,14 +45,14 @@ def setup():
                 try:
                     zip_ref.extract(name, extract_path)
                 except Exception as e:
-                    print("failed to extract Chainsaw")
+                    print("failed to extract tool")
         os.remove(filename)
         #rename chainsaw_x86_64-pc-windows-msvc.exe to chainsaw.exe
-        os.rename(r".\Modules\tools\chainsaw\chainsaw_x86_64-pc-windows-msvc.exe",r".\Modules\tools\chainsaw\chainsaw.exe")
+        os.rename(f".\\Modules\\tools\\hayabusa\\{final_file_name}.exe",r".\Modules\tools\hayabusa\hayabusa.exe")
 def execute(config):
     setup()
     # check if module already runned on this machine
-    if os.path.isfile(config["drive_path"]+"\\CSVs\\sigma.csv"):
+    if os.path.isfile(config["drive_path"]+"\\CSVs\\sigma_test.csv"):
         return()
     
     extract_path=config["drive_path"]
@@ -68,10 +70,10 @@ def get_type():
     return("machine_module")
 
 def get_name():
-    return("chainsaw")
+    return("hayabusa")
 
 def get_machine_type():
     return("windows")
 
 def get_description():
-    return("Executes the Chainsaw tool to use Sigma rules on the machine")
+    return("Executes the hayabusa tool to use Sigma rules on the machine")
