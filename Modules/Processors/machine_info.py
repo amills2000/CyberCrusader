@@ -32,7 +32,7 @@ def get_SO_info_json(config):
                 version = value.value()
                 machine_data["version"]=version
     except Exception as e:
-        print(f"\033[91m"+"Error on SAM hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SAM hive"+str(e)+"\n"+"\033[0m")
     # get the machine name
     try:
         key = reg_system.open("ControlSet001\Control\ComputerName\ComputerName")
@@ -41,7 +41,7 @@ def get_SO_info_json(config):
                 machine_name = value.value()
                 machine_data["machine_name"]=machine_name
     except Exception as e:
-        print(f"\033[91m"+"Error on SAM hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SAM hive"+str(e)+"\n"+"\033[0m")
     # get the machine SID
     try:
         key = reg_sam.open(r"Domains\Account\Users\Names")
@@ -50,7 +50,7 @@ def get_SO_info_json(config):
                 machine_sid = value.value().split("-")[0]
                 machine_data["machine_sid"]=machine_sid
     except Exception as e:
-        print(f"\033[91m"+"Error on SAM hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SAM hive"+str(e)+"\n"+"\033[0m")
     # get the machine domain
     try:
         key = reg_sam.open("SAM\Domains\Account")
@@ -59,7 +59,7 @@ def get_SO_info_json(config):
                 machine_domain = value.value().split("\\")[0]
                 machine_data["machine_domain"]=machine_domain
     except Exception as e:
-        print(f"\033[91m"+"Error on SAM hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SAM hive"+str(e)+"\n"+"\033[0m")
     return(machine_data)
     
 
@@ -95,25 +95,25 @@ def getRuns(SOFTWARE,extract_path):
         for value in values.values():
             df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     except Exception as e:
-        print(f"\033[91m"+"Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
     try:
         values = reg.open("Microsoft\\Windows\\CurrentVersion\\RunOnce")
         for value in values.values():
             df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     except Exception as e:
-        print(f"\033[91m"+"Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
     try:
         values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run")
         for value in values.values():
             df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     except Exception as e:
-        print(f"\033[91m"+"Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
     try:
         values = reg.open("WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\RunOnce")
         for value in values.values():
             df_run_tmp.loc[len(df_run_tmp.index)] = [value.values().strip(),"system"]
     except Exception as e:
-        print(f"\033[91m"+"Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
+        print(f"\033[91m"+" * Error on SOFTWARE hive"+str(e)+"\n"+"\033[0m")
     return df_run_tmp
 
 def getUserRuns(SOFTWARE, username,extract_path):
@@ -181,20 +181,20 @@ def execute(config):
     SOFTWARE = rootPath + "\\Windows\\System32\\config\\SOFTWARE"
     machine_data=get_SO_info_json(config)
     if not exists(SYSTEM):
-        print(f"\033[91m"+"SYSTEM not found, check CyLr path"+"\033[0m")
+        print(f"\033[91m"+" * SYSTEM not found, check CyLr path"+"\033[0m")
     else:
         machine_data["IPs"]=printIP(SYSTEM)
         
         getServices(SYSTEM,rootPath)
     if not exists(SOFTWARE):
-        print(f"\033[91m"+"SYSTEM not found, check CyLr path"+"\033[0m")
+        print(f"\033[91m"+" * SYSTEM not found, check CyLr path"+"\033[0m")
     else:
         machine_data["users"]=printUsers(SOFTWARE)
         
         getRuns(SOFTWARE,rootPath)
         
     if not exists(rootPath + "\\Users"):
-        print(f"\033[91m"+"Users not found, check CyLr path"+"\033[0m")
+        print(f"\033[91m"+" * Users not found, check CyLr path"+"\033[0m")
     else:
         df_run_tmp = pd.DataFrame({"path":[],"user":[]})
         for f in os.scandir(rootPath + "\\Users"):

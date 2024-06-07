@@ -18,7 +18,6 @@ DOMAIN_POS=9
 
 def parse_rdp_attacks(path):
     #read the rdp_attacks.csv file line by line
-    print("path: "+path)
     df=pd.DataFrame(columns=["initial_timestamp", "end_timestamp", "source_hostname", "source_ip", "destination", "user"])
     with open(path, "r") as f:
         #create a dataframe to store the initial_timestamp, end_timespamp, source_hostname, source_ip, destination, user
@@ -37,7 +36,6 @@ def parse_rdp_attacks(path):
             if splited_line[EVENT_ID_POS]==CONNECT_EVENT_ID:
                 #store previous line on df
                 if len(prev_line)>0:
-                    print("connect event append prev line (no end timestamp)")
                     df_new_row = pd.DataFrame({
                         "initial_timestamp":prev_line[TIMESTAMP_POS],
                         "end_timestamp":"",
@@ -51,7 +49,6 @@ def parse_rdp_attacks(path):
                 prev_id=splited_line[EVENT_ID_POS]
             elif splited_line[EVENT_ID_POS]==DISCONECT_EVENT_ID:
                 if prev_id==CONNECT_EVENT_ID and prev_line[USERNAME_POS]==splited_line[USERNAME_POS]:
-                    print("disconnect event append prev line (full)")
                     df_new_row = pd.DataFrame({
                         "initial_timestamp":prev_line[TIMESTAMP_POS],
                         "end_timestamp":splited_line[TIMESTAMP_POS],
@@ -64,7 +61,6 @@ def parse_rdp_attacks(path):
                     prev_line=[]
                     prev_id=""
                 else:
-                    print("disconnect event append current line (no start timestamp)")
                     df_new_row = pd.DataFrame({
                         "initial_timestamp":"",
                         "end_timestamp":splited_line[TIMESTAMP_POS],
@@ -97,14 +93,12 @@ def parse_rdp_attacks(path):
                 "user":prev_line[USERNAME_POS]
             }, index=[0])
             df=pd.concat([df, df_new_row], ignore_index=True)
-    print(df)
     return(df) 
 
 def execute(home,machines):
     #iterate all windows machines and look for rdp_attacks.csv files
     #create a dataframe to store the initial_timestamp, end_timespamp, source_hostname, source_ip, destination, user
     df=pd.DataFrame(columns=["initial_timestamp", "end_timestamp", "source_hostname", "source_ip", "destination", "user"])
-    print(machines)
     for machine in machines:
         #check if the machine has a rdp_attacks.csv file
         for path in machines[machine]:
@@ -112,7 +106,7 @@ def execute(home,machines):
                 #read the file and append it to the dataframe
                 df = pd.concat([df, parse_rdp_attacks(path+"\\CSVs\\rdp_attacks.csv")])
     #store the dataframe to csv and json
-    df.to_csv(home+"\\CSVs\\rdp_timeline.csv", index=False)
+    df.to_csv(home+".\\merged_results\\CSVs\\rdp_timeline.csv", index=False)
 
 def get_dependencies():
     return(["ALL"])

@@ -204,11 +204,13 @@ for machine_type in machines:
 # Execute all the merger modules
 print(f"{CYAN}[+] Executing merger modules...{NOCOLOR}")
 #create output folders
-if not os.path.isdir(os.path.join(dir_path,"CSVs")):
-    os.mkdir(os.path.join(dir_path,"CSVs"))
-if not os.path.isdir(os.path.join(dir_path,"JSONs")):
-    os.mkdir(os.path.join(dir_path,"JSONs"))
-if not os.path.isdir(os.path.join(dir_path,"TXTs")):
+if not os.path.isdir(os.path.join(dir_path,"merged_results")):
+    os.mkdir(os.path.join(dir_path,"merged_results"))
+if not os.path.isdir(os.path.join(dir_path,"./merged_results/CSVs")):
+    os.mkdir(os.path.join(dir_path,"./merged_results/CSVs"))
+if not os.path.isdir(os.path.join(dir_path,"./merged_results/JSONs")):
+    os.mkdir(os.path.join(dir_path,"./merged_results/JSONs"))
+if not os.path.isdir(os.path.join(dir_path,"./merged_results/TXTs")):
     os.mkdir(os.path.join(dir_path,"TXTs"))
 for module in modules["merger_module"]["ALL"]:
     print(f"{GREEN} * Executing module {module.get_name()}{NOCOLOR}")

@@ -3,6 +3,7 @@ import requests
 import urllib
 import os
 from zipfile import ZipFile 
+import sys
 
 def setup():
     #check if mft.exe is in the tools folder, if not download it
@@ -47,6 +48,7 @@ def setup():
         os.remove(filename)
         #rename chainsaw_x86_64-pc-windows-msvc.exe to chainsaw.exe
         os.rename(r".\Modules\tools\chainsaw\chainsaw_x86_64-pc-windows-msvc.exe",r".\Modules\tools\chainsaw\chainsaw.exe")
+
 def execute(config):
     setup()
     # check if module already runned on this machine
@@ -54,10 +56,7 @@ def execute(config):
         return()
     
     extract_path=config["drive_path"]
-    res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT,shell=True)
-    out, err = res.communicate()
-        # Quizas a fichero de log
-
+    res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=sys.stdout,stderr=sys.stderr).communicate()
 def get_dependencies():
     return([])
 
