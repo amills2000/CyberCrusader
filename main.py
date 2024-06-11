@@ -211,7 +211,7 @@ if not os.path.isdir(os.path.join(dir_path,"./merged_results/CSVs")):
 if not os.path.isdir(os.path.join(dir_path,"./merged_results/JSONs")):
     os.mkdir(os.path.join(dir_path,"./merged_results/JSONs"))
 if not os.path.isdir(os.path.join(dir_path,"./merged_results/TXTs")):
-    os.mkdir(os.path.join(dir_path,"TXTs"))
+    os.mkdir(os.path.join(dir_path,"./merged_results/TXTs"))
 for module in modules["merger_module"]["ALL"]:
     print(f"{GREEN} * Executing module {module.get_name()}{NOCOLOR}")
     #execute the modules based on machine type
