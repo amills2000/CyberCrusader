@@ -1,8 +1,5 @@
-import subprocess
-import requests
-import urllib
 import os
-import pandas as pd
+
 def execute(config):
     keys="user,file,key_type,key\n"
     #extract all the ssh keys and its information from all users

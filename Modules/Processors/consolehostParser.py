@@ -1,7 +1,4 @@
 import os
-import requests
-from zipfile import ZipFile 
-import subprocess
 
 def execute(config):
     ConsoleHostHistory="Command,user"

@@ -1,6 +1,5 @@
 import subprocess
 import requests
-import urllib
 import os
 def setup():
     #check if mft.exe is in the tools folder, if not download it

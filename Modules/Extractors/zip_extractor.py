@@ -1,12 +1,7 @@
 
 import sys
-import zipfile_deflate64 as zipfile
 import os
 import os.path
-import getopt
-import concurrent.futures
-import logging
-import requests
 import subprocess
 
 def setup():

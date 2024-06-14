@@ -1,8 +1,5 @@
-import subprocess
-import requests
-import urllib
 import os
-import pandas as pd
+
 def execute(config):
     #review all the possible cron files and extract the information from them into a csv
     # check if module already runned on this machine

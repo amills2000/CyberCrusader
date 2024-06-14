@@ -1,6 +1,5 @@
 import subprocess
 import requests
-import urllib
 import os
 from zipfile import ZipFile 
 import sys

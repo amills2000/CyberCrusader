@@ -1,6 +1,3 @@
-import subprocess
-import requests
-import urllib
 import os
 import pandas as pd
 def execute(config):

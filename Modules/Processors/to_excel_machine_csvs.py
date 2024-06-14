@@ -1,7 +1,7 @@
 import glob
 import pandas as pd
 import os
-from io import StringIO
+
 
 def detect_csv_separator(filename,sample_size=1024):
     potential_delimiters = [',', '\t', ';','|']  # Common CSV delimiters to check

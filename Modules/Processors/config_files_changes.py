@@ -1,8 +1,4 @@
-import subprocess
-import requests
-import urllib
 import os
-import pandas as pd
 
 def compare_files(model, machine_file):
     with open(model, 'r') as f1, open(machine_file, 'r') as f2:

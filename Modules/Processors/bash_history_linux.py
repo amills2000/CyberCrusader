@@ -1,8 +1,4 @@
-import subprocess
-import requests
-import urllib
 import os
-import pandas as pd
 def execute(config):
     #check if module already runned on this machine
     if os.path.isfile(config["drive_path"]+"\\CSVs\\linux_bash_history.csv"):

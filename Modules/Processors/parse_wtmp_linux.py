@@ -1,6 +1,6 @@
 import utmp
 import os
-import pandas as pd
+
 def execute(config):
     res="time,type,pid,line,id,user,host,exit0,exit1,session,sec,usec,addr0,addr1,addr2,addr3,unused\n"
     # parse the wtmp file and save it to csv

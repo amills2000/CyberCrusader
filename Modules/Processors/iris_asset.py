@@ -1,7 +1,5 @@
 import os
 import requests
-from zipfile import ZipFile 
-import subprocess
 import json
 
 def execute(config):
