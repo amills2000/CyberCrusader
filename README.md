@@ -91,6 +91,15 @@ This project is based on python 3.0 and you will need to have it install on the 
    ```
    pip install -r requirements.tx
    ```
+3. Copy the backup config file
+    ```
+    cp ./configs.json.back ./configs.json
+    ```
+4. Add the 7zip binary to /Modules/tools/7zip/7z.exe
+
+#### Optional 
+
+The INSTALL.bat can be used to add the run button to the context menu.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

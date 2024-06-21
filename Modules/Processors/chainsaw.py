@@ -6,7 +6,7 @@ import sys
 
 def setup():
     #check if mft.exe is in the tools folder, if not download it
-    if os.path.isfile(r".\Modules\tools\chainsaw\chainsaw_x86_64-pc-windows-msvc.exe"):
+    if os.path.isfile(r".\Modules\tools\chainsaw\chainsaw.exe"):
         return()
     # GitHub repository information
     repo_owner = "WithSecureLabs"

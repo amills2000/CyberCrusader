@@ -1,0 +1,7 @@
+{
+    "iris_url":"<iris_domain>",
+    "iris_port":"443",
+    "iris_token":"<iris_token>",
+    "use_iris": "false",
+    "blacklisted_modules":[]
+}
