@@ -1,7 +1,8 @@
 import subprocess
 import os
 
-def execute(path):
+def execute(config):
+    path=config["path"]
     #recurivelly iterate directories and detect all Machine paths, where a machine path is a directory that contains a $MFT file and return all in an array of tuples containing the machine name, the type and the path extract the name from the path where is not the drive leter
     machines=[]
     for root, dirs, files in os.walk(path):

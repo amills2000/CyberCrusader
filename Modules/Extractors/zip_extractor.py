@@ -1,23 +1,30 @@
-
 import sys
 import os
 import os.path
 import subprocess
 
+_7ZIP_PATH = "7zip\\7z.exe"
+TOOLS_PATH = None
+
 def setup():
     #check if mft.exe is in the tools folder, if not download it
-    if os.path.isfile(r".\Modules\tools\7zip\7z.exe"):
+    if os.path.isfile(os.path.join(TOOLS_PATH, _7ZIP_PATH)):
         return()
-    print("Downloading 7zip and add the binary 7z.exe to the tools folder (./modules/tools/7zip/7z.exe)")
+    print(f" * Downloading 7zip and add the binary 7z.exe to the tools folder.")
 
-def execute(path):
+def execute(config):
+    path=config["path"]
+    global TOOLS_PATH
+    TOOLS_PATH = config["tools_path"]
     setup()
-    print("Extracting "+path)
+    print(" * Extracting "+path)
     extract_path=os.path.join(path.split(".")[0])
     if os.path.isdir(extract_path):
+        print(" * Already extracted, skipping")
         return(extract_path)
-    #extract using the .\Modules\tools\7zip\7zr.exe
-    res = subprocess.Popen([r".\Modules\tools\7zip\7z.exe", "x", path, f"-o{extract_path}","-tzip"],stdout=sys.stdout,stderr=subprocess.DEVNULL).communicate()
+    if not os.path.exists(os.path.join(TOOLS_PATH, _7ZIP_PATH)):
+        raise Exception("7zip not found in tools folder")
+    res = subprocess.Popen([os.path.join(TOOLS_PATH, _7ZIP_PATH), "x", path, f"-o{extract_path}","-tzip"],stdout=sys.stdout,stderr=subprocess.DEVNULL).communicate()
     return(extract_path)
 
 def get_dependencies():
