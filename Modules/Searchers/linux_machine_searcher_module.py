@@ -1,7 +1,8 @@
 import subprocess
 import os
 
-def execute(path):
+def execute(config):
+    path=config["path"]
     #recurivelly iterate directories and detect all Machine paths, where a machine path is a directory that contains at least 2 folders alled root and home
     machines=[]
     for root, dirs, files in os.walk(path):
