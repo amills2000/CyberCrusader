@@ -7,7 +7,11 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\parsed_wtmp.csv"):
         return()
     # open the file
-    with open(config["drive_path"]+"\\var\\log\\wtmp", 'rb') as fd:
+    if config["machine_type"]=="uac_linux":
+        root_path=config["drive_path"]+"\\[root]"
+    else:
+        root_path=config["drive_path"]
+    with open(root_path+"\\var\\log\\wtmp", 'rb') as fd:
         buf = fd.read()
         for entry in utmp.read(buf):
             res+=str(entry.time)+","+str(entry.type)+","+str(entry.pid)+","+str(entry.line)+","+str(entry.id)+","+str(entry.user)+","+str(entry.host)+","+str(entry.exit0)+","+str(entry.exit1)+","+str(entry.session)+","+str(entry.sec)+","+str(entry.usec)+","+str(entry.addr0)+","+str(entry.addr1)+","+str(entry.addr2)+","+str(entry.addr3)+","+str(entry.unused)+"\n"
@@ -27,7 +31,7 @@ def get_name():
     return("parse_wtmp_linux")
 
 def get_machine_type():
-    return("linux")
+    return(["linux","uac_linux"])
 
 def get_description():
     return("Parses the wtmp file")

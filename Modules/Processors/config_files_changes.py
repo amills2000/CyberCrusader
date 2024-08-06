@@ -12,8 +12,12 @@ def execute(config):
     #check if module already runned on this machine
     if os.path.isfile(config["drive_path"]+"\\CSVs\\linux_config_files.csv"):
         return()
+    if config["machine_type"]=="uac_linux":
+        root_path=config["drive_path"]+"\\[root]"
+    else:
+        root_path=config["drive_path"]
     mismatched_files="file_path,value\n"
-    for root, dirs, files in os.walk(config["drive_path"]):
+    for root, dirs, files in os.walk(root_path):
         for file in files:
             if file in model_files:
                 #compare the files and add the mismatched lines to the csv one line per mismatch

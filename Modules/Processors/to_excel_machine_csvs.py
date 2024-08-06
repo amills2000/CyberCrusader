@@ -27,7 +27,7 @@ def execute(config):
             if os.path.getsize(filename) > 10000000:
                 continue
             separator = detect_csv_separator(filename)
-            df = pd.read_csv(filename, sep=separator)
+            df = pd.read_csv(filename, sep=separator, on_bad_lines='skip',low_memory=False)
             #if only headers continue
             if len(df) < 2:
                 continue
@@ -49,7 +49,7 @@ def get_name():
     return("to_excel_machine_csvs")
 
 def get_machine_type():
-    return(["windows","linux"])
+    return(["windows","linux","uac_linux"])
 
 def get_description():
     return("Adds all small/medium sized csv to excel file")

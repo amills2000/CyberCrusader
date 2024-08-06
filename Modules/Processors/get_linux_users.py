@@ -42,7 +42,7 @@ def get_name():
     return("get_linux_users")
 
 def get_machine_type():
-    return("linux")
+    return("linux","linux_uac")
 
 def get_description():
     return("Extracts linux users and its information")
