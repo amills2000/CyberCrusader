@@ -89,7 +89,7 @@ This project is based on python 3.0 and you will need to have it install on the 
    ```
 2. Install python requirements
    ```
-   pip install -r requirements.tx
+   pip install -r requirements.txt
    ```
 3. Copy the backup config file
     ```
