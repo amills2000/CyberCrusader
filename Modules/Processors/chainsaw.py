@@ -6,7 +6,7 @@ import sys
 
 def setup():
     #check if mft.exe is in the tools folder, if not download it
-    if os.path.isfile(r".\Modules\tools\chainsaw\chainsaw.exe"):
+    if os.path.isfile(r".\\Modules\\tools\\chainsaw\\chainsaw.exe"):
         return()
     # GitHub repository information
     repo_owner = "WithSecureLabs"
@@ -30,14 +30,14 @@ def setup():
         print(f"No asset with the filename '{target_filename}' found in the latest release.")
     else:
         # Extract the filename from the asset URL
-        filename = r".\Modules\tools\chainsaw.zip"
+        filename = r".\\Modules\\tools\\chainsaw.zip"
 
         # Download the asset
         response = requests.get(asset_url)
         with open(filename, 'wb') as file:
             file.write(response.content)
         print(f"'{filename}' downloaded successfully.")
-        extract_path=r".\Modules\tools"
+        extract_path=r".\\Modules\\tools"
         with ZipFile(filename, 'r') as zip_ref:
             for name in zip_ref.namelist():
                 try:
@@ -46,7 +46,7 @@ def setup():
                     print("failed to extract Chainsaw")
         os.remove(filename)
         #rename chainsaw_x86_64-pc-windows-msvc.exe to chainsaw.exe
-        os.rename(r".\Modules\tools\chainsaw\chainsaw_x86_64-pc-windows-msvc.exe",r".\Modules\tools\chainsaw\chainsaw.exe")
+        os.rename(r".\\Modules\\tools\\chainsaw\\chainsaw_x86_64-pc-windows-msvc.exe",r".\\Modules\\tools\\chainsaw\\chainsaw.exe")
 
 def execute(config):
     setup()
@@ -55,7 +55,7 @@ def execute(config):
         return()
     
     extract_path=config["drive_path"]
-    res = subprocess.Popen([r".\Modules\tools\chainsaw\chainsaw.exe", "hunt", extract_path+"\Windows\System32\winevt\Logs","-s",".\Modules\\tools\chainsaw\sigma","--mapping", ".\Modules\\tools\chainsaw\mappings\sigma-event-logs-all.yml", "-r" , ".\Modules\\tools\chainsaw\\rules","--csv","--output",extract_path+"\CSVs","--skip-errors"],stdout=sys.stdout,stderr=sys.stderr).communicate()
+    res = subprocess.Popen([r".\\Modules\\tools\\chainsaw\\chainsaw.exe", "hunt", extract_path+"\\Windows\\System32\\winevt\\Logs","-s",".\\Modules\\tools\\chainsaw\\sigma","--mapping", ".\\Modules\\tools\\chainsaw\\mappings\\sigma-event-logs-all.yml", "-r" , ".\\Modules\\tools\\chainsaw\\rules","--csv","--output",extract_path+"\\CSVs","--skip-errors"],stdout=sys.stdout,stderr=sys.stderr).communicate()
 def get_dependencies():
     return([])
 

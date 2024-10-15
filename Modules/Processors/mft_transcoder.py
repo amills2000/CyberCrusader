@@ -3,7 +3,7 @@ import requests
 import os
 def setup():
     #check if mft.exe is in the tools folder, if not download it
-    if os.path.isfile(r".\Modules\tools\mft.exe"):
+    if os.path.isfile(r".\\Modules\\tools\\mft.exe"):
         return()
     # GitHub repository information
     repo_owner = "makitos666"
@@ -27,7 +27,7 @@ def setup():
         print(f"No asset with the filename '{target_filename}' found in the latest release.")
     else:
         # Extract the filename from the asset URL
-        filename = r".\Modules\tools\mft.exe"
+        filename = r".\\Modules\\tools\\mft.exe"
 
         # Download the asset
         response = requests.get(asset_url)
@@ -42,7 +42,7 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\MFT.csv"):
         return()
     try:
-        res = subprocess.Popen([r".\Modules\tools\mft.exe", "transcode", config["drive_path"]+"\\$MFT", config["drive_path"]+"\\CSVs\\MFT.csv"],stdout=subprocess.PIPE)
+        res = subprocess.Popen([r".\\Modules\\tools\\mft.exe", "transcode", config["drive_path"]+"\\$MFT", config["drive_path"]+"\\CSVs\\MFT.csv"],stdout=subprocess.PIPE)
         out, err = res.communicate()
     except Exception as e:
         print("Error on MFT tool"+str(e)+"\n")

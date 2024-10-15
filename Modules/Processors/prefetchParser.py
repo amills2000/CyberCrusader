@@ -5,7 +5,7 @@ import subprocess
 
 def setup():
     # download if not exists and unzip https://f001.backblazeb2.com/file/EricZimmermanTools/net6/PECmd.zip
-    if os.path.isfile(r".\Modules\tools\PECmd\PECmd.exe"):
+    if os.path.isfile(r".\\Modules\\tools\\PECmd\\PECmd.exe"):
         return()
     url = "https://f001.backblazeb2.com/file/EricZimmermanTools/net6/PECmd.zip"
     
@@ -22,8 +22,8 @@ def setup():
         print(f"File '{filename}' downloaded successfully!")
     else:
         print("Failed to download the file.")
-    # unzip to .\Modules\tools\AmcacheParser
-    extract_path=r".\Modules\tools\PECmd"
+    # unzip to .\\Modules\\tools\\AmcacheParser
+    extract_path=r".\\Modules\\tools\\PECmd"
     with ZipFile(filename, 'r') as zip_ref:
         for name in zip_ref.namelist():
             try:
@@ -40,7 +40,7 @@ def execute(config):
         return()
     try:
         # .\PECmd.exe -d "C:\Evidencies\Redline_stealer\SLT\LAPTOP_UH5L93SM\C\Windows\prefetch" --csv "./out" --csvf "prefetch.csv"
-        subprocess.check_call([r".\Modules\tools\PECmd\PECmd.exe", "-d", extract_path+"\Windows\prefetch","--csv",extract_path+"\CSVs","--csvf","prefetch.csv"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
+        subprocess.check_call([r".\\Modules\\tools\\PECmd\\PECmd.exe", "-d", extract_path+"\\Windows\\prefetch","--csv",extract_path+"\\CSVs","--csvf","prefetch.csv"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
     except Exception as e:
         print("Error on Prefetch tool"+str(e))
 

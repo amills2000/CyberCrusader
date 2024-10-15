@@ -5,7 +5,7 @@ import subprocess
 
 def setup():
     # download if not exists and unzip https://f001.backblazeb2.com/file/EricZimmermanTools/net6/AppCompatCacheParser.zip
-    if os.path.isfile(r".\Modules\tools\AppCompatCacheParser\AppCompatCacheParser.exe"):
+    if os.path.isfile(r".\\Modules\\tools\\AppCompatCacheParser\\AppCompatCacheParser.exe"):
         return()
     url = "https://f001.backblazeb2.com/file/EricZimmermanTools/net6/AppCompatCacheParser.zip"
     
@@ -22,8 +22,8 @@ def setup():
         print(f"File '{filename}' downloaded successfully!")
     else:
         print("Failed to download the file.")
-    # unzip to .\Modules\tools\AppCompatCacheParser
-    extract_path=r".\Modules\tools\AppCompatCacheParser"
+    # unzip to .\\Modules\\tools\\AppCompatCacheParser
+    extract_path=r".\\Modules\\tools\\AppCompatCacheParser"
     with ZipFile(filename, 'r') as zip_ref:
         for name in zip_ref.namelist():
             try:
@@ -39,7 +39,7 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\AppCompatCache.csv"):
         return()
     try:
-        subprocess.check_call([r".\Modules\tools\AppCompatCacheParser\AppCompatCacheParser.exe", "-f", extract_path+"\Windows\System32\config\SYSTEM","--csv",extract_path+"\CSVs","--csvf","AppCompatCache.csv"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
+        subprocess.check_call([r".\\Modules\\tools\\AppCompatCacheParser\\AppCompatCacheParser.exe", "-f", extract_path+"\Windows\System32\config\SYSTEM","--csv",extract_path+"\CSVs","--csvf","AppCompatCache.csv"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
     except Exception as e:
         print("Error on AppCompatCacheParser tool"+str(e))
 

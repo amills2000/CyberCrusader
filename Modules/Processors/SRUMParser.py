@@ -5,7 +5,7 @@ import subprocess
 
 def setup():
     # download if not exists and unzip https://f001.backblazeb2.com/file/EricZimmermanTools/net6/SrumECmd.zip
-    if os.path.isfile(r".\Modules\tools\SrumECmd\SrumECmd.exe"):
+    if os.path.isfile(r".\\Modules\\tools\\SrumECmd\\SrumECmd.exe"):
         return()
     url = "https://f001.backblazeb2.com/file/EricZimmermanTools/net6/SrumECmd.zip"
     
@@ -22,8 +22,8 @@ def setup():
         print(f"File '{filename}' downloaded successfully!")
     else:
         print("Failed to download the file.")
-    # unzip to .\Modules\tools\AmcacheParser
-    extract_path=r".\Modules\tools\SrumECmd"
+    # unzip to .\\Modules\\tools\\AmcacheParser
+    extract_path=r".\\Modules\\tools\\SrumECmd"
     with ZipFile(filename, 'r') as zip_ref:
         for name in zip_ref.namelist():
             try:
@@ -40,7 +40,7 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\SrumECmd_AppResourceUseInfo.csv"):
         return()
     try:
-        subprocess.check_call([r".\Modules\tools\SrumECmd\SrumECmd.exe", "-f", extract_path+"\C\Windows\System32\SRU\SRUDB.dat","-r", extract_path+"\C\Windows\System32\config\SOFTWARE","--csv",extract_path+"\CSVs"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
+        subprocess.check_call([r".\\Modules\\tools\\SrumECmd\\SrumECmd.exe", "-f", extract_path+"\\C\\Windows\\System32\\SRU\\SRUDB.dat","-r", extract_path+"\\C\\Windows\\System32\\config\\SOFTWARE","--csv",extract_path+"\CSVs"],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
         file_list = os.listdir(path)
         # Specify the pattern to match and the new file name
         pattern_to_match = "SrumECmd"
