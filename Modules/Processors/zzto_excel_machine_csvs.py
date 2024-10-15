@@ -4,7 +4,7 @@ import os
 
 
 def detect_csv_separator(filename,sample_size=1024):
-    potential_delimiters = [',', '\t', ';','|']  # Common CSV delimiters to check
+    potential_delimiters = [',', '\t','|']  # Common CSV delimiters to check
     delimiter_count = {}
 
     with open(filename, 'r') as file:
@@ -21,16 +21,26 @@ def execute(config):
     in_path=config["drive_path"]
     path=os.path.join(in_path, "CSVs")
     writer = pd.ExcelWriter(os.path.join(in_path, machine+".xlsx"), engine = 'xlsxwriter')
-    for filename in glob.glob(os.path.join(path, "*.csv")):
+    #list all files on firectory 
+    for filename in os.listdir(path):
+#   for filename in glob.glob(os.path.join(path, "*.csv")):
+        if not filename.endswith(".csv"):
+            continue
         try:
+            filename=os.path.join(path, filename)
             # join if csv is not too big for excel
-            if os.path.getsize(filename) > 10000000:
+            #get number of lines
+            num_lines = sum(1 for line in open(filename))
+            #if os.path.getsize(filename) > 10000000:
+            #    continue
+            if num_lines > 1000000:
                 continue
             separator = detect_csv_separator(filename)
-            df = pd.read_csv(filename, sep=separator, on_bad_lines='skip',low_memory=False)
+            df = pd.read_csv(filename, sep=separator, on_bad_lines='skip',low_memory=False,skip_blank_lines=True,encoding='utf-8')
             #if only headers continue
             if len(df) < 2:
                 continue
+
             df.to_excel(writer, sheet_name=os.path.basename(filename).split(".")[0], index=False) 
         except Exception as e:
             print(e)

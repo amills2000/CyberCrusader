@@ -47,7 +47,7 @@ def get_dependencies():
     return(["all"])
 
 def get_outputs():
-    return(["all.csv"])
+    return([("report.txt","report")])
 
 def get_type():
     return("machine_module")

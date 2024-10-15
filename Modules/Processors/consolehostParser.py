@@ -24,7 +24,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["consolehost.csv"])
+    return([("consolehost.csv","consolehost")])
 
 def get_type():
     return("machine_module")

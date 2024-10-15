@@ -51,7 +51,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["parsed_MFT"])
+    return([("MFT.csv","MFT")])
 
 def get_type():
     return("machine_module")

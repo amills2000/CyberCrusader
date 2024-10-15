@@ -28,7 +28,7 @@ def get_dependencies():
     return(["mft_transcoder"])
 
 def get_outputs():
-    return(["ext_filtered_MFT"])
+    return(["MFT_suspicious_tools.csv"])
 
 def get_type():
     return("machine_module")

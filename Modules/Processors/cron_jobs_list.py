@@ -7,7 +7,7 @@ def execute(config):
         return()
     crons="file,path,minute,hour,day,month,weekday,command\n"
     #root path
-    root_path=config["drive_path"]+"\\[root]"
+    root_path=config["drive_path"]
     #read all files in /etc/cron.d
     try:
         for path in os.listdir(root_path+"\\etc\\cron.d"):
@@ -73,6 +73,8 @@ def execute(config):
     for path in os.listdir(root_path+"\\etc"):
         if path.startswith("cron.") and os.path.isdir(root_path+"\\etc\\"+path):
             #list files inside the folder
+            if path.split(".")[1] not in cron_trad:
+                continue
             for file in os.listdir(root_path+"\\etc\\"+path):
                 if os.path.isdir(root_path+"\\var\\spool\\cron\\"+path):
                     continue
@@ -92,7 +94,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["linux_crons"])
+    return([("linux_crons.csv","linux_crons")])
 
 def get_type():
     return("machine_module")
@@ -101,7 +103,7 @@ def get_name():
     return("get_linux_crons")
 
 def get_machine_type():
-    return("uac_linux")
+    return(["linux"])
 
 def get_description():
     return("Extracts linux crons and its information")

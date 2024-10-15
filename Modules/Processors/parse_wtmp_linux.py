@@ -7,10 +7,8 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\parsed_wtmp.csv"):
         return()
     # open the file
-    if config["machine_type"]=="uac_linux":
-        root_path=config["drive_path"]+"\\[root]"
-    else:
-        root_path=config["drive_path"]
+
+    root_path=config["drive_path"]
     with open(root_path+"\\var\\log\\wtmp", 'rb') as fd:
         buf = fd.read()
         for entry in utmp.read(buf):
@@ -22,7 +20,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["wtmp_parsed"])
+    return([("parsed_wtmp.csv","parsed_wtmp")])
 
 def get_type():
     return("machine_module")
@@ -31,7 +29,7 @@ def get_name():
     return("parse_wtmp_linux")
 
 def get_machine_type():
-    return(["linux","uac_linux"])
+    return(["linux"])
 
 def get_description():
     return("Parses the wtmp file")

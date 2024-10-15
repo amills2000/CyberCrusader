@@ -8,7 +8,11 @@ def execute(config):
     in_path=config["drive_path"]
     path=os.path.join(in_path, "CSVs")
     conn = sqlite3.connect(os.path.join(in_path, machine+".db"))
-    for filename in glob.glob(os.path.join(path, "*.csv")):
+    for filename in os.listdir(path):
+#   for filename in glob.glob(os.path.join(path, "*.csv")):
+        if not filename.endswith(".csv"):
+            continue
+        filename=os.path.join(path, filename)
         try:
             if (filename.split("\\")[-1]=="services.csv") or filename.split("\\")[-1]=="MFT.csv":
                 read_file = pd.read_csv(os.path.join(path, filename),sep="|", on_bad_lines='skip',low_memory=False)

@@ -37,7 +37,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["pfirewallStats.csv"])
+    return([("pfirewall.csv","pfirewall"),("pfirewallStats.csv","pfirewallStats")])
 
 def get_type():
     return("machine_module")

@@ -60,7 +60,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["sigma.csv"])
+    return([("sigma.csv","sigma"),("rdp_attacks.csv","rdp_attacks"),("lateral_movement.csv","lateral_movement"),("antivirus.csv","antivirus")])
 
 def get_type():
     return("machine_module")

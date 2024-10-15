@@ -12,10 +12,7 @@ def execute(config):
     #check if module already runned on this machine
     if os.path.isfile(config["drive_path"]+"\\CSVs\\linux_config_files.csv"):
         return()
-    if config["machine_type"]=="uac_linux":
-        root_path=config["drive_path"]+"\\[root]"
-    else:
-        root_path=config["drive_path"]
+    root_path=config["drive_path"]
     mismatched_files="file_path,value\n"
     for root, dirs, files in os.walk(root_path):
         for file in files:
@@ -34,7 +31,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["linux_config_files"])
+    return([("linux_config_files.csv","linux_config_files")])
 
 def get_type():
     return("machine_module")
@@ -43,7 +40,7 @@ def get_name():
     return("get_linux_config_files_mods")
 
 def get_machine_type():
-    return("linux")
+    return(["linux"])
 
 def get_description():
     return("Compares linux config files with the model to check for modifications")

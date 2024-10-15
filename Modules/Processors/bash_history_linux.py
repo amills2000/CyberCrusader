@@ -4,10 +4,8 @@ def execute(config):
     if os.path.isfile(config["drive_path"]+"\\CSVs\\linux_bash_history.csv"):
         return()
     #extract the bash history of each user and store it on a csv file with user,command
-    if config["machine_type"]=="uac_linux":
-        root_path=config["drive_path"]+"\\[root]"
-    else:
-        root_path=config["drive_path"]
+
+    root_path=config["drive_path"]
     bash_history="user,command\n"
     #iterate all home directories
     for path in os.listdir(root_path+"\\home"):
@@ -30,7 +28,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["linux_bash_history"])
+    return([("linux_bash_history.csv","bash_history")])
 
 def get_type():
     return("machine_module")
@@ -39,7 +37,7 @@ def get_name():
     return("get_linux_bash_history")
 
 def get_machine_type():
-    return(["linux","uac_linux"])
+    return(["linux"])
 
 def get_description():
     return("Extracts linux bash history and its information")

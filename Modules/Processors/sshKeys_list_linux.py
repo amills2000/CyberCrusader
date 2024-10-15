@@ -31,7 +31,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["linux_ssh_keys"])
+    return([("linux_ssh_keys.csv","ssh_keys")])
 
 def get_type():
     return("machine_module")
@@ -40,7 +40,7 @@ def get_name():
     return("get_linux_ssh_keys")
 
 def get_machine_type():
-    return("linux")
+    return(["linux"])
 
 def get_description():
     return("Extracts linux ssh keys and its information")

@@ -48,7 +48,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["prefetch.csv"])
+    return([("prefetch.csv","prefetch"),("prefetch_Timeline.csv","prefetch")])
 
 def get_type():
     return("machine_module")

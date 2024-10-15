@@ -47,7 +47,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["AppCompatCache.csv"])
+    return([("AppCompatCache.csv","AppCompatCache")])
 
 def get_type():
     return("machine_module")

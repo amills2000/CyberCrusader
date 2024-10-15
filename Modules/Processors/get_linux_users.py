@@ -33,7 +33,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["linux_users"])
+    return([("linux_users.csv","linux_users"),("linux_users.json",None)])
 
 def get_type():
     return("machine_module")
@@ -42,7 +42,7 @@ def get_name():
     return("get_linux_users")
 
 def get_machine_type():
-    return("linux","linux_uac")
+    return(["linux"])
 
 def get_description():
     return("Extracts linux users and its information")

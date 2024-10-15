@@ -8,7 +8,12 @@ def execute(config):
     for root, dirs, files in os.walk(path):
         if "root" in dirs and "home" in dirs:
             machine_path=root
-            machine_name=machine_path.split("\\")[-1]
+            try:
+                #open /etc/HOSTNAME and extract the machine namew
+                with open(machine_path+"\\etc\\hostname", "r") as f:
+                    machine_name=f.read().strip()	
+            except:
+                machine_name=machine_path.split("\\")[-1]
             machines.append((machine_name,machine_path))
     return(machines)
 def get_dependencies():

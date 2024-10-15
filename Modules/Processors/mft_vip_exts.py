@@ -20,7 +20,7 @@ def get_dependencies():
     return(["mft_transcoder"])
 
 def get_outputs():
-    return(["ext_filtered_MFT"])
+    return([("MFT_vip_ext.csv","MFT_vip_ext")])
 
 def get_type():
     return("machine_module")

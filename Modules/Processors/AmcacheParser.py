@@ -47,7 +47,7 @@ def get_dependencies():
     return([])
 
 def get_outputs():
-    return(["Amcache.csv"])
+    return([("Amcache_DeviceContainers.csv",None),("Amcache_DevicePnps.csv",None),("Amcache_DriveBinaries.csv",None),("Amcache_DriverPackages.csv",None),("Amcache_ShortCuts.csv",None),("Amcache_UnassociatedFileEntries.csv",None)])
 
 def get_type():
     return("machine_module")

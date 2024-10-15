@@ -254,11 +254,14 @@ if not os.path.isdir(os.path.join(dir_path,"./merged_results/TXTs")):
 for module in modules["merger_module"]["ALL"]:
     print(f"{GREEN} * Executing module {module.get_name()}{NOCOLOR}")
     #execute the modules based on machine type
-    try:
-        module.execute(dir_path,machines[module.get_machine_type()])
-    except Exception as e:
-        handle_error(e, module.get_name())
-        continue
+    if module.get_machine_type() in machines:
+        try:
+            module.execute(dir_path,machines[module.get_machine_type()])
+        except Exception as e:
+            handle_error(e, module.get_name())
+            continue
+    else:
+        print(f"{RED}   => Error: No mmachines found for machine type {module.get_name()}{NOCOLOR}")
     
 
 print(f"{GREEN}[+] Done!{NOCOLOR}")
