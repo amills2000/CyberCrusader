@@ -59,7 +59,7 @@ def get_name():
     return("to_excel_machine_csvs")
 
 def get_machine_type():
-    return(["windows","linux","uac_linux"])
+    return(["windows","linux","uac_linux","windows_live_response"])
 
 def get_description():
     return("Adds all small/medium sized csv to excel file")

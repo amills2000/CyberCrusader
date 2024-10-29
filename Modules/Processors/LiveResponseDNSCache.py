@@ -1,9 +1,5 @@
 import os
-import requests
-from zipfile import ZipFile 
-import subprocess
 import re
-import json
 
 DNScodes = {
     "1": {
@@ -483,13 +479,13 @@ lang = {
 
 
 def execute(config):
-    if not os.path.exists(config["DrivePath"]+"\\dns_cache.txt"):
+    if not os.path.exists(config["drive_path"]+"\\dns_cache.txt"):
         return()
-    if os.path.exists(config["DrivePath"]+"\\CSVs\\dns_cache.csv"):
+    if os.path.exists(config["drive_path"]+"\\CSVs\\dns_cache.csv"):
         return()
     dns_cache=[]
     cache={}
-    with open(config["DrivePath"]+"\\dns_cache.txt","r",encoding="utf-16") as f:
+    with open(config["drive_path"]+"\\dns_cache.txt","r",encoding="utf-16") as f:
         previous_line=""
         reg={}
         while True:
@@ -528,11 +524,13 @@ def execute(config):
             else:
                 reg[result.group(1).strip()]=result.group(2).strip()
     #store json
-    with open(config["DrivePath"]+"\\JSONs\\dns_cache.json","w",encoding="utf-16") as f:
+    with open(config["drive_path"]+"\\JSONs\\dns_cache.json","w",encoding="utf-16") as f:
         f.write(str(dns_cache))
     #store csv only domain and respuesta/response 
     out="domain,regname,regtype,response\n"
     for entry in dns_cache:
+        if not "respuesta" in entry:
+            continue
         for response in entry["respuesta"]:
             if response["Tipo de registro"] in DNScodes:
                 response["Tipo de registro"]=DNScodes[response["Tipo de registro"]]["type"]
@@ -557,7 +555,7 @@ def execute(config):
             elif "Registro PTR" in response:
                 out+=entry["domain"]+","+response["Nombre de registro"]+","+response["Tipo de registro"]+","+response["Registro PTR"]+"\n"
 
-    with open(config["DrivePath"]+"\\CSVs\\dns_cache.csv","w",encoding="utf-16") as f:
+    with open(config["drive_path"]+"\\CSVs\\dns_cache.csv","w",encoding="utf-16") as f:
         f.write(out)
                 
 
@@ -583,5 +581,5 @@ def get_description():
 
 
 if __name__ == "__main__":
-    config={"DrivePath":r"test path"}
+    config={"drive_path":r"test path"}
     execute(config)

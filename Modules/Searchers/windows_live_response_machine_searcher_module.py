@@ -28,8 +28,6 @@ def execute(config):
     for machine in machines:
         if "MFT" in machines[machine][2] and "LiveResponse" in machines[machine][2]:
             machines_out.append((machines[machine][0],machines[machine][1]))
-    print(machines_out)
-    print(machines)
     return machines_out
 def get_dependencies():
     return(["triage_path"])
