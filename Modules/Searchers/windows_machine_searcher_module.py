@@ -24,7 +24,7 @@ def execute(config):
                     continue
                 machines.append((machine_name,machine_path))
     return(machines)
-    
+
 def get_dependencies():
     return(["triage_path"])
 

@@ -556,10 +556,7 @@ def execute(config):
                 out+=entry["domain"]+","+response["Nombre de registro"]+","+response["Tipo de registro"]+","+response["Registro PTR"]+"\n"
 
     with open(config["drive_path"]+"\\CSVs\\dns_cache.csv","w",encoding="utf-16") as f:
-        f.write(out)
-                
-
-            
+        f.write(out)            
 
 def get_dependencies():
     return([])

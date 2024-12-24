@@ -3,5 +3,6 @@
     "iris_port":"443",
     "iris_token":"<iris_token>",
     "use_iris": "false",
-    "blacklisted_modules":[]
+    "blacklisted_modules":[],
+    "avoidVss":"true"
 }
