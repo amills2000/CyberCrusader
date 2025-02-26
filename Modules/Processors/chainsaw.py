@@ -48,6 +48,7 @@ def setup():
         #rename chainsaw_x86_64-pc-windows-msvc.exe to chainsaw.exe
         os.rename(r".\\Modules\\tools\\chainsaw\\chainsaw_x86_64-pc-windows-msvc.exe",r".\\Modules\\tools\\chainsaw\\chainsaw.exe")
 
+
 def execute(config):
     setup()
     # check if module already runned on this machine

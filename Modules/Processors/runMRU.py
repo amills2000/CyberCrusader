@@ -8,7 +8,7 @@ def getUserMRURuns(SOFTWARE, username,extract_path):
     df_mrurun_tmp = pd.DataFrame({"command":[],"user":[]})
     reg = Registry.Registry(SOFTWARE)
     try:
-        values = reg.open("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\RunMRU")
+        values = reg.open("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU")
         for value in values.values(): 
            df_mrurun_tmp.loc[len(df_mrurun_tmp.index)] = [value.value(),username]
     except:
