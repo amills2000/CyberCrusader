@@ -40,8 +40,11 @@ def execute(config):
             #if only headers continue
             if len(df) < 2:
                 continue
-
-            df.to_excel(writer, sheet_name=os.path.basename(filename).split(".")[0], index=False) 
+            sheet_name=os.path.basename(filename).split(".")[0]
+            #if sheet name is too long
+            if len(sheet_name) > 30:
+                sheet_name=sheet_name[:30]
+            df.to_excel(writer, sheet_name=sheet_name, index=False) 
         except Exception as e:
             print(e)
     writer.close()
