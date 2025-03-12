@@ -9,6 +9,10 @@ import re
 import json
 
 def setup():
+    #check if yara on tools
+    if not os.path.isfile("./Modules/tools/yara/yr.exe"):
+        print("yara_rule.yar not found Download from https://github.com/VirusTotal/yara-x and create a folder under /Modules/tools/yara that contains yr.exe")
+        return()
     pass
 
 def generate_base64_permutations(input_string: str):
