@@ -17,25 +17,28 @@ def setup():
 
 def generate_base64_permutations(input_string: str):
     encoded_variants = set()
-    first_char_encoded = base64.b64encode(input_string[0].encode()).decode()[0]
-    last_enc_char = base64.b64encode(("xx"+input_string[-1]).encode()).decode()[-1]
-    # Try encoding with different alignments (adding leading bytes)
-    for prefix_len in range(3):  # 0, 1, or 2 extra bytes before the string
-        prefix = "X" * prefix_len  # Dummy prefix to shift encoding
-        full_string = prefix + input_string
-        
-        # Encode in Base64
-        encoded = base64.b64encode(full_string.encode()).decode()
-        #trim extra leading characters
-        encoded = encoded[prefix_len:]
-        #trim padding
+    #op1 no padding 
+    encoded = base64.b64encode(input_string.encode()).decode()
+    if encoded.endswith("="):
         encoded = encoded.rstrip("=")
-        if not encoded.endswith(last_enc_char):
-            encoded = encoded[:-1]
-
-        if not encoded.startswith(first_char_encoded):
-            encoded = encoded[1:]
-        encoded_variants.add(encoded)
+        encoded = encoded[:-1]
+    encoded_variants.add(encoded)
+    #op2 padding
+    string="x"+input_string
+    encoded = base64.b64encode(string.encode()).decode()
+    encoded = encoded[2:]
+    if encoded.endswith("="):
+        encoded = encoded.rstrip("=")
+        encoded = encoded[:-1]
+    encoded_variants.add(encoded)
+    #op3 padding
+    string="xx"+input_string
+    encoded = base64.b64encode(string.encode()).decode()
+    encoded = encoded[3:]
+    if encoded.endswith("="):
+        encoded = encoded.rstrip("=")
+        encoded = encoded[:-1]
+    encoded_variants.add(encoded)
             
     return encoded_variants
 
