@@ -103,7 +103,7 @@ def execute(config):
         return()
     generate_combined_yara_rule(open("./Modules/tools/suspicious_tools.txt").read().split("\n"),"./Modules/tools/yara/yara_rule.yar")
     extract_path=config["drive_path"]
-    process = subprocess.Popen([r".\\Modules\\tools\\yara\\yr.exe", "scan",r"./Modules/tools/yara/yara_rule.yar",r"D:\Evidencies\testing\Test\SRVDC1_kape_2024-10-02T094353","-r","-o","json","-m","-w","--disable-console-logs"],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+    process = subprocess.Popen([r".\\Modules\\tools\\yara\\yr.exe", "scan",r"./Modules/tools/yara/yara_rule.yar",extract_path,"-r","-o","json","-m","-w","--disable-console-logs"],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
     stdout, stderr = process.communicate()
     if stderr:
         raise(stderr)

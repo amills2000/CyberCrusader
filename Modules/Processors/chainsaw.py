@@ -56,7 +56,7 @@ def execute(config):
         return()
     
     extract_path=config["drive_path"]
-    res = subprocess.Popen([r".\\Modules\\tools\\chainsaw\\chainsaw.exe", "hunt", extract_path+"\\Windows\\System32\\winevt\\Logs","-s",".\\Modules\\tools\\chainsaw\\sigma","--mapping", ".\\Modules\\tools\\chainsaw\\mappings\\sigma-event-logs-all.yml", "-r" , ".\\Modules\\tools\\chainsaw\\rules","--csv","--output",extract_path+"\\CSVs","--skip-errors"],stdout=sys.stdout,stderr=sys.stderr).communicate()
+    res = subprocess.Popen([r".\\Modules\\tools\\chainsaw\\chainsaw.exe", "hunt", extract_path+"\\Windows\\System32\\winevt\\Logs","--mapping", ".\\Modules\\tools\\chainsaw\\mappings\\sigma-event-logs-all.yml", "-r" , ".\\Modules\\tools\\chainsaw\\rules","--csv","--output",extract_path+"\\CSVs","--skip-errors"],stdout=sys.stdout,stderr=sys.stderr).communicate()
 def get_dependencies():
     return([])
 
